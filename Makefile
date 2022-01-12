@@ -6,7 +6,7 @@
 #    By: bleroy <bleroy@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/06 10:37:35 by bleroy            #+#    #+#              #
-#    Updated: 2022/01/11 17:19:33 by bleroy           ###   ########.fr        #
+#    Updated: 2022/01/12 13:29:26 by bleroy           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ SRCS = pipex.c \
 	   Utils/ft_split.c \
 	   Utils/ft_strjoin.c \
 	   Utils/ft_strnstr.c \
+	   childs.c \
 
 OBJS = ${SRCS:.c=.o}
 

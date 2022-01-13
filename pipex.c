@@ -6,7 +6,7 @@
 /*   By: bleroy <bleroy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 16:38:56 by bleroy            #+#    #+#             */
-/*   Updated: 2022/01/12 18:12:55 by bleroy           ###   ########.fr       */
+/*   Updated: 2022/01/13 13:55:36 by bleroy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,59 +40,37 @@ char	*getcmd(char *path, char *args)
 	}
 	return (NULL);
 }
-/*
-int	process(char **argv, char *path)
-{
-	int	pid1;
-	int	pid2;
-
-	pid1 = fork();
-	if (pid1 < 0)
-		return (0);
-	pid2 = fork();
-	if (pid2 < 0)
-		return (0);
-	if (pid1 == 0)
-		child1(argv, path);
-	if (pid2 == 0)
-		child2(argv, path);
-	waitpid(pid1, NULL, 0);
-	return (0);
-}*/
 
 int	main(int argc, char **argv, char **env)
 {
-	int		fd[2];
+	t_pipex	pipex;
 	char	*path;
 	int		pid1;
 	int		pid2;
+	int		macron[2];
 
 	if (argc == 5)
 	{
-		fd[0] = open(argv[1], O_RDONLY);
-		if (fd[0] < 0)
+		pipex.fd[0] = open(argv[1], O_RDONLY);
+		if (pipex.fd[0] < 0)
 			return (0);
-		fd[1] = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0777);
-		if (fd[0] < 0)
+		pipex.fd[1] = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+		if (pipex.fd[1] < 0)
 			return (0);
-		pipe(fd);
-		if (pipe(fd) == -1)
+		if (pipe(macron) == -1)
 			return (0);
 		path = getpath(env);
 		pid1 = fork();
 		if (pid1 < 0)
 			return (0);
+		if (pid1 == 0)
+			child1(macron[1], pipex, argv, path, env);
 		pid2 = fork();
 		if (pid2 < 0)
 			return (0);
-		printf("OwO");
-		if (pid1 == 0)
-			child1(fd[0], argv, path, env);
-		printf("UwU");
 		if (pid2 == 0)
-			child2(fd[1], argv, path, env);
+			child2(macron[0], pipex, argv, path, env);
 		waitpid(pid1, NULL, 0);
-		waitpid(pid2, NULL, 0);
 	}
 	return (0);
 }

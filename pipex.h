@@ -6,7 +6,7 @@
 /*   By: bleroy <bleroy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:08:22 by bleroy            #+#    #+#             */
-/*   Updated: 2022/01/13 13:56:26 by bleroy           ###   ########.fr       */
+/*   Updated: 2022/01/13 17:51:38 by bleroy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ char	**ft_split(char const *s, char c);
 size_t	ft_strlen(const char *s);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 
-void	child1(int macron, t_pipex pipex, char **argv, char *path, char **env);
-void	child2(int macron, t_pipex pipex, char **argv, char *path, char **env);
+void	child1(int macron, char **argv, char *path, char **env);
+void	child2(int macron, char **argv, char *path, char **env);
 
+char	error(char *s);
 char	*getcmd(char *path, char *args);
 char	*getpath(char **env);
-int		process(char **argv, char *path);
 int		main(int argc, char **argv, char **f);
 
 #endif

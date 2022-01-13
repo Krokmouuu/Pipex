@@ -6,11 +6,21 @@
 /*   By: bleroy <bleroy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 16:38:56 by bleroy            #+#    #+#             */
-/*   Updated: 2022/01/13 13:55:36 by bleroy           ###   ########.fr       */
+/*   Updated: 2022/01/13 17:52:33 by bleroy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+char	error(char *s)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+		write(1, &s[i], 1);
+	exit(0);
+}
 
 char	*getpath(char **env)
 {
@@ -38,39 +48,39 @@ char	*getcmd(char *path, char *args)
 		free (cmd);
 		i++;
 	}
-	return (NULL);
+	error("Command or path not available");
+	exit(0);
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	t_pipex	pipex;
 	char	*path;
 	int		pid1;
 	int		pid2;
 	int		macron[2];
 
+	if (argc != 5)
+		error("Missing or Too much arguments");
 	if (argc == 5)
 	{
-		pipex.fd[0] = open(argv[1], O_RDONLY);
-		if (pipex.fd[0] < 0)
-			return (0);
-		pipex.fd[1] = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0777);
-		if (pipex.fd[1] < 0)
-			return (0);
 		if (pipe(macron) == -1)
-			return (0);
+			error("Problem pipe");
 		path = getpath(env);
 		pid1 = fork();
 		if (pid1 < 0)
-			return (0);
+			error("Error fork one");
 		if (pid1 == 0)
-			child1(macron[1], pipex, argv, path, env);
+			child1(macron[1], argv, path, env);
+		close(macron[1]);
 		pid2 = fork();
 		if (pid2 < 0)
-			return (0);
+			error("Error fork two");
 		if (pid2 == 0)
-			child2(macron[0], pipex, argv, path, env);
+			child2(macron[0], argv, path, env);
+		close(macron[0]);
+		close(macron[1]);
 		waitpid(pid1, NULL, 0);
+		waitpid(pid2, NULL, 0);
 	}
 	return (0);
 }

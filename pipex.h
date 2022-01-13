@@ -6,7 +6,7 @@
 /*   By: bleroy <bleroy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:08:22 by bleroy            #+#    #+#             */
-/*   Updated: 2022/01/13 18:09:21 by bleroy           ###   ########.fr       */
+/*   Updated: 2022/01/13 18:25:25 by bleroy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,14 @@
 # include <fcntl.h>
 # include <errno.h>
 
-typedef struct s_pipex
-{
-	int	fd[2];
-}	t_pipex;
-
 char	*ft_strchr(char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
 char	**ft_split(char const *s, char c);
 size_t	ft_strlen(const char *s);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 
-void	child1(int macron, char **argv, char *path, char **env);
-void	child2(int macron, char **argv, char *path, char **env);
+void	child1(int macron, char **argv, char **env);
+void	child2(int macron, char **argv, char **env);
 
 char	error(char *s);
 char	*getcmd(char *path, char *args);

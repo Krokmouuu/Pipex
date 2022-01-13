@@ -6,7 +6,7 @@
 /*   By: bleroy <bleroy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 16:38:56 by bleroy            #+#    #+#             */
-/*   Updated: 2022/01/13 18:11:28 by bleroy           ###   ########.fr       */
+/*   Updated: 2022/01/13 18:24:23 by bleroy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,33 +54,28 @@ char	*getcmd(char *path, char *args)
 
 int	main(int argc, char **argv, char **env)
 {
-	char	*path;
 	int		pid1;
 	int		pid2;
 	int		macron[2];
 
 	if (argc != 5)
 		error("Missing or Too much arguments");
-	if (argc == 5)
-	{
-		if (pipe(macron) == -1)
-			error("Problem pipe");
-		path = getpath(env);
-		pid1 = fork();
-		if (pid1 < 0)
-			error("Error fork one");
-		if (pid1 == 0)
-			child1(macron[1], argv, path, env);
-		close(macron[1]);
-		pid2 = fork();
-		if (pid2 < 0)
-			error("Error fork two");
-		if (pid2 == 0)
-			child2(macron[0], argv, path, env);
-		close(macron[0]);
-		close(macron[1]);
-		waitpid(pid1, NULL, 0);
-		waitpid(pid2, NULL, 0);
-	}
+	if (pipe(macron) == -1)
+		error("Problem pipe");
+	pid1 = fork();
+	if (pid1 < 0)
+		error("Error fork one");
+	if (pid1 == 0)
+		child1(macron[1], argv, env);
+	close(macron[1]);
+	pid2 = fork();
+	if (pid2 < 0)
+		error("Error fork two");
+	if (pid2 == 0)
+		child2(macron[0], argv, env);
+	close(macron[0]);
+	close(macron[1]);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
 	return (0);
 }

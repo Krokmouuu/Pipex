@@ -6,7 +6,7 @@
 /*   By: bleroy <bleroy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 15:43:48 by bleroy            #+#    #+#             */
-/*   Updated: 2022/01/13 17:51:16 by bleroy           ###   ########.fr       */
+/*   Updated: 2022/01/13 18:07:54 by bleroy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	child2(int macron, char **argv, char *path, char **env)
 
 	fd = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd < 0)
-		return ;
+		error("Output file error");
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 	args = ft_split(argv[3], ' ');

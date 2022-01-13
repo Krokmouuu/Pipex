@@ -6,7 +6,7 @@
 /*   By: bleroy <bleroy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 17:08:22 by bleroy            #+#    #+#             */
-/*   Updated: 2022/01/13 17:51:38 by bleroy           ###   ########.fr       */
+/*   Updated: 2022/01/13 18:09:21 by bleroy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <errno.h>
 
 typedef struct s_pipex
 {

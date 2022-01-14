@@ -6,7 +6,7 @@
 /*   By: bleroy <bleroy@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/05 16:38:56 by bleroy            #+#    #+#             */
-/*   Updated: 2022/01/13 18:24:23 by bleroy           ###   ########.fr       */
+/*   Updated: 2022/01/14 12:15:59 by bleroy           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	error(char *s)
 	while (s[++i])
 		write(2, &s[i], 1);
 	exit(0);
+	return (0);
 }
 
 char	*getpath(char **env)
